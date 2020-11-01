@@ -53,18 +53,18 @@ if (!this.root) return 0;
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
-if (!this.root) return 0;
+    let result = 0;
 
     function maxSumHelper(node) {
-      if (node.left === null && node.right === null) return node.val;
-      if (node.left === null) return maxSumHelper(node.right) + node.val;
-      if (node.right === null) return maxSumHelper(node.left) + node.val;
-      return (
-        Math.max(maxSumHelper(node.left), maxSumHelper(node.right)) + node.val
-      );
+      if (node === null) return 0;
+      const leftSum = maxSumHelper(node.left);
+      const rightSum = maxSumHelper(node.right);
+      result = Math.max(result, node.val + leftSum + rightSum);
+      return Math.max(0, leftSum + node.val, rightSum + node.val);
     }
 
-    return maxSumHelper(this.root);
+    maxSumHelper(this.root);
+    return result;
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
