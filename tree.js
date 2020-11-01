@@ -15,16 +15,25 @@ class Tree {
   /** sumValues(): add up all of the values in the tree. */
 
   sumValues() {
-    total = 0;
-    let visitingStack = [];
-    visitingStack.push(this);
-    while(visitingStack.length) {
-      let currentNode = visitingStack.pop();
-      total += currentNode.val;
-      visitingStack.push(currentNode.children);
+   if (!this.root) return 0;
+
+    let total = this.root.val;
+
+    function sumHelper(node) {
+      // go through all the children for a Node
+      for (let child of node.children) {
+        // accumulate all values
+        total += child.val;
+        // if it has any children
+        if (child.children.length > 0) {
+          // recurse with the child as the root
+          sumHelper(child);
+        }
+      }
     }
+
+    sumHelper(this.root);
     return total;
-    
   }
 
   /** countEvens(): count all of the nodes in the tree with even values. */
